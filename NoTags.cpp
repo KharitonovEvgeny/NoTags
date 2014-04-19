@@ -17,6 +17,18 @@ int correct_file_name(char file_name[])
         return 1;  
     return 0;
 } 
+int strScan(char* str,FILE* file){
+    int i =0;
+    if (str==NULL)
+        str = (char*)malloc(sizeof(char)*300);
+    char c = getc(file);
+    while (c!='\n'){
+        str[i]= c;
+        c =getc(file);
+        i++;
+    }
+    str[i]='\0';    
+}
 char *out_file_name(char in_name[])
 {
     char *out_name;
@@ -73,10 +85,9 @@ int file_convert(char path_from[], char path_to[])
 {
     FILE *from, *to;
     char string[301];
-    string[0] = '\0';
     from = fopen(path_from, "r");
     to = fopen(path_to, "w");
-    fscanf(from,"%300s", string);
+    strScan(string, from);
     fprintf(to, "%s", stringOp(string));
     fclose(from);
     fclose(to);
@@ -84,9 +95,9 @@ int file_convert(char path_from[], char path_to[])
 }
 int console_convert()
 {
-    char string[501];
+    char string[302];
     printf("Enter string to process: \n");
-    scanf("%500s", string);
+    strScan(string, stdin);
     if (strlen(string) > 300)
     {
         printf("Incorrect input, try again, enter string to process: \n");
