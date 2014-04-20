@@ -19,15 +19,23 @@ int correct_file_name(char file_name[])
 } 
 int strScan(char* str,FILE* file){
     int i =0;
+    int len = 0;
     if (str==NULL)
-        str = (char*)malloc(sizeof(char)*300);
+        str = (char*)malloc(sizeof(char)*301);
     char c = getc(file);
-    while (c!='\n'){
-        str[i]= c;
-        c =getc(file);
+    while (c!='\n'){    
+        if (i<300){
+            str[i]= c;
+            len++;
+        } 
+        c = getc(file);
         i++;
     }
-    str[i]='\0';    
+    str[len]='\0';
+    if (len == i) 
+        return 0;
+    else
+        return 1;
 }
 char *out_file_name(char in_name[])
 {
@@ -95,16 +103,16 @@ int file_convert(char path_from[], char path_to[])
 }
 int console_convert()
 {
-    char string[302];
+    char string[301];
     printf("Enter string to process: \n");
-    strScan(string, stdin);
-    if (strlen(string) > 300)
-    {
+    if (strScan(string, stdin)==1){
         printf("Incorrect input, try again, enter string to process: \n");
         return 1;
     }
-    printf("%s\n", stringOp(string));
-    return 0;
+    else{
+        printf("%s\n", stringOp(string));
+        return 0;
+    }
 }
 int main(int argc, char* argv[])
 {
