@@ -105,14 +105,27 @@ int console_convert()
 {
     char string[301];
     printf("Enter string to process: \n");
-    if (strScan(string, stdin)==1){
-        printf("Incorrect input, try again, enter string to process: \n");
-        return 1;
+    for (int i =0; i<3; i++){
+        if (strScan(string, stdin)==0){
+            printf("%s\n", stringOp(string));
+            return 0;
+        }
+        else if (i!=2){
+            printf("Incorrect input, try again, enter string to process: \n");
+        }
+        else
+            printf("Incorrect input, exited.\n");
     }
-    else{
-        printf("%s\n", stringOp(string));
-        return 0;
-    }
+    return 1;
+//    printf("Enter string to process: \n");
+//    if (strScan(string, stdin)==1){
+//        printf("Incorrect input, try again, enter string to process: \n");
+//        return 1;
+//    }
+//    else{
+//        printf("%s\n", stringOp(string));
+//        return 0;
+//    }
 }
 int main(int argc, char* argv[])
 {
@@ -137,22 +150,10 @@ int main(int argc, char* argv[])
         else
         {
             printf("Incorrect filename or file not found. \n");
-            if (console_convert() != 0)
-            if (console_convert() != 0)
-            if (console_convert() != 0)
-            {
-                printf("Incorrect input, exited.\n");
-                return 1;
-            }
+            return console_convert();
         }
     }
     else
-    if (console_convert() != 0)
-    if (console_convert() != 0)
-    if (console_convert() != 0)
-    {
-        printf("Incorrect input, exited.\n");
-        return 1;
-    }
+        return console_convert();
     return 0;
 }
