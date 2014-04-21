@@ -7,15 +7,14 @@
 #include <cstdlib>
 #include <cstdio>
 
-int correct_file_name(char file_name[])
+bool correct_file_name(char file_name[])
 {
     int l = strlen(file_name);
-    if (file_name[l - 4] == '.' && file_name[l - 3] == 't' && file_name[l - 2] == 'x' && file_name[l - 1] == 't' 
-        && fopen(file_name, "r") != NULL)
-        return 0;
+    if (file_name[l - 4] == '.' && file_name[l - 3] == 't' 
+        && file_name[l - 2] == 'x' && file_name[l - 1] == 't')
+        return true;
     else
-        return 1;  
-    return 0;
+        return false;  
 } 
 int strScan(char* str,FILE* file){
     int i =0;
@@ -59,27 +58,22 @@ char *stringOp(char string[])
     int j = 0;
     int k = 0;
     bool tag = false;
-    for (int i = 0; i < len; i++)
-    {
-        if (string[i] == 60)
-        {
+    for (int i = 0; i < len; i++){
+        if (string[i] == 60){
             tag = true;
             temp[j] = string[i];
             j++;
         }
-        else if (string[i] == 62 && tag == true)
-        {
+        else if (string[i] == 62 && tag == true){
             tag = false;
             temp[0] = '\0';
             j = 0;
         }
-        else if (tag == false)
-        {
+        else if (tag == false){
             result[k] = string[i];
             k++;
         }
-        else     //tag == true
-        {
+        else{
             temp[j] = string[i];
             j++;
         }
@@ -93,13 +87,23 @@ int file_convert(char path_from[], char path_to[])
 {
     FILE *from, *to;
     char string[301];
-    from = fopen(path_from, "r");
-    to = fopen(path_to, "w");
-    strScan(string, from);
-    fprintf(to, "%s", stringOp(string));
-    fclose(from);
-    fclose(to);
-    return 0;
+    if (correct_file_name(path_from) && (from = fopen(path_from, "r"))){
+        if (to = fopen(path_to, "w")){
+            strScan(string, from);
+            fprintf(to, "%s", stringOp(string));
+            fclose(from);
+            fclose(to);
+            return 0;
+        }
+        else{
+            printf("Error writing to file.»\n");
+                return 1;
+        }
+    }
+    else{
+        printf("Incorrect filename or file not found. \n");
+        return console_convert();
+    }
 }
 int console_convert()
 {
@@ -117,43 +121,11 @@ int console_convert()
             printf("Incorrect input, exited.\n");
     }
     return 1;
-//    printf("Enter string to process: \n");
-//    if (strScan(string, stdin)==1){
-//        printf("Incorrect input, try again, enter string to process: \n");
-//        return 1;
-//    }
-//    else{
-//        printf("%s\n", stringOp(string));
-//        return 0;
-//    }
 }
 int main(int argc, char* argv[])
 {
     if (argc > 1)
-    {
-        if (correct_file_name(argv[1]) == 0)
-        {
-            char* from = argv[1];
-            char *to;
-            to = out_file_name(from);
-            if (fopen(to, "w") != NULL)
-            {
-                file_convert(from, to);
-                return 0;
-            }
-            else
-            {
-                printf("Error writing to file.»\n");
-                return 1;
-            }
-        }
-        else
-        {
-            printf("Incorrect filename or file not found. \n");
-            return console_convert();
-        }
-    }
+        return file_convert(argv[1],out_file_name(argv[1]));
     else
         return console_convert();
-    return 0;
 }

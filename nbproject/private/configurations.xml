@@ -24,8 +24,11 @@
       </nativedebugger>
       <runprofile version="9">
         <runcommandpicklist>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" test.txt</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" test.tx</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" tst.txt</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" test.txt</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" </runcommandpicklistitem>
         </runcommandpicklist>
         <runcommand>"${OUTPUT_PATH}"</runcommand>
         <rundir></rundir>
