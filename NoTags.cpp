@@ -1,14 +1,9 @@
 // NoTags.cpp
 // Semestr1 Laba1
 
-#define _CRT_SECURE_NO_WARNINGS
 #include "NoTags.h"
-#include <string.h>
-#include <cstdlib>
-#include <cstdio>
 
-bool correct_file_name(char file_name[])
-{
+bool correct_file_name(char file_name[]){
     int l = strlen(file_name);
     if (file_name[l - 4] == '.' && file_name[l - 3] == 't' 
         && file_name[l - 2] == 'x' && file_name[l - 1] == 't')
@@ -36,8 +31,7 @@ int strScan(char* str,FILE* file){
     else
         return 1;
 }
-char *out_file_name(char in_name[])
-{
+char *out_file_name(char in_name[]){
     char *out_name;
     out_name = (char *)malloc(sizeof(char)* 300);
     int i;
@@ -49,8 +43,7 @@ char *out_file_name(char in_name[])
     out_name[i + 8] = '\0';
     return out_name;
 }
-char *stringOp(char string[]) 
-{
+char *stringOp(char string[]) {
     int len = strlen(string);
     char temp[300];
     char *result;
@@ -83,8 +76,7 @@ char *stringOp(char string[])
     result[k+j] = '\0';
     return result;
 }
-int file_convert(char path_from[], char path_to[]) 
-{
+int file_convert(char path_from[], char path_to[]) {
     FILE *from, *to;
     char string[301];
     if (correct_file_name(path_from) && (from = fopen(path_from, "r"))){
@@ -105,8 +97,7 @@ int file_convert(char path_from[], char path_to[])
         return console_convert();
     }
 }
-int console_convert()
-{
+int console_convert(){
     char string[301];
     printf("Enter string to process: \n");
     for (int i =0; i<3; i++){
@@ -122,8 +113,7 @@ int console_convert()
     }
     return 1;
 }
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]){
     if (argc > 1)
         return file_convert(argv[1],out_file_name(argv[1]));
     else
